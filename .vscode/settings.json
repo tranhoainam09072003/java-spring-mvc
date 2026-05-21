@@ -3,7 +3,8 @@
         "glassfish",
         "hoidanit",
         "jstl",
-        "laptopshop"
+        "laptopshop",
+        "taglib"
     ],
     "java.configuration.updateBuildConfiguration": "interactive",
     "maven.view": "hierarchical"
