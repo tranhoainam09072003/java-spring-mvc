@@ -2,6 +2,8 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +23,13 @@ public class UserController {
 
     private final UserService userService;
     private final UploadFileService uploadFileService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadFileService uploadFileService) {
+    public UserController(UserService userService, UploadFileService uploadFileService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadFileService = uploadFileService;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -62,6 +67,11 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") User hoainam,
             @RequestParam("hoidanitFile") MultipartFile file) {
         String avatar = this.uploadFileService.handleSaveUploadFile(file, "avatar");
+        String hashPassword = this.passwordEncoder.encode(hoainam.getPassword());
+        hoainam.setAvatar(avatar);
+        hoainam.setPassword(hashPassword);
+        hoainam.setRole(this.userService.getRoleByName(hoainam.getRole().getName()));
+        this.userService.handleSaveUser(hoainam);
 
         return "redirect:/admin/user";
     }
