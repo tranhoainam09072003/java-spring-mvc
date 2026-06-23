@@ -1,6 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+        <!DOCTYPE html>
         <html lang="en">
 
         <head>
@@ -10,18 +11,14 @@
             <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
             <meta name="author" content="Hỏi Dân IT" />
 
-            ```
             <title>Manager Product - Hỏi Dân IT</title>
 
             <link href="/css/styles.css" rel="stylesheet" />
             <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-            ```
-
         </head>
 
         <body class="sb-nav-fixed">
 
-            ```
             <jsp:include page="../layout/header.jsp" />
 
             <div id="layoutSidenav">
@@ -50,8 +47,9 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h3>Table Product</h3>
+
                                             <a href="/admin/product/create" class="btn btn-primary">
-                                                Create a product
+                                                Create a Product
                                             </a>
                                         </div>
 
@@ -61,39 +59,46 @@
 
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Factory</th>
-                                                    <th scope="col">Action</th>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Factory</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
+
                                                 <c:forEach var="product" items="${products}">
+
                                                     <tr>
                                                         <td>${product.id}</td>
                                                         <td>${product.name}</td>
                                                         <td>${product.price}</td>
                                                         <td>${product.factory}</td>
+
                                                         <td>
+
                                                             <a href="/admin/product/${product.id}"
-                                                                class="btn btn-success">
+                                                                class="btn btn-success btn-sm">
                                                                 View
                                                             </a>
 
-                                                            <a href="/admin/product/update${product.id}"
-                                                                class="btn btn-warning mx-2">
+                                                            <a href="/admin/product/update/${product.id}"
+                                                                class="btn btn-warning btn-sm mx-2">
                                                                 Update
                                                             </a>
 
-                                                            <a href="/admin/product/delete${product.id}"
-                                                                class="btn btn-danger">
+                                                            <a href="/admin/product/delete/${product.id}"
+                                                                class="btn btn-danger btn-sm">
                                                                 Delete
                                                             </a>
+
                                                         </td>
                                                     </tr>
+
                                                 </c:forEach>
+
                                             </tbody>
 
                                         </table>
@@ -114,7 +119,6 @@
                 crossorigin="anonymous"></script>
 
             <script src="/js/scripts.js"></script>
-            ```
 
         </body>
 
