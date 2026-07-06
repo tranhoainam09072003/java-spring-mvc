@@ -42,6 +42,14 @@
 
                                                 <form:form method="post" action="/register"
                                                     modelAttribute="registerUser">
+                                                    <c:set var="errorPassword">
+                                                        <form:errors path="confirmPassword"
+                                                            cssClass="invalid-feedback" />
+                                                    </c:set>
+                                                    <c:set var="errorEmail">
+                                                        <form:errors path="email" cssClass="invalid-feedback" />
+                                                    </c:set>
+
 
                                                     <div class="row mb-3">
 
@@ -84,11 +92,13 @@
                                                     <div class="form-floating mb-3">
 
                                                         <form:input path="email" id="inputEmail" type="email"
-                                                            cssClass="form-control" placeholder="name@example.com" />
+                                                            class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                                            placeholder="name@example.com" />
 
                                                         <label for="inputEmail">
                                                             Email Address
                                                         </label>
+                                                        ${errorEmail}
 
                                                         <form:errors path="email" cssClass="text-danger" />
 
@@ -101,11 +111,13 @@
                                                             <div class="form-floating mb-3 mb-md-0">
 
                                                                 <form:password path="password" id="inputPassword"
-                                                                    cssClass="form-control" placeholder="Password" />
+                                                                    class="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
+                                                                    placeholder="Password" />
 
                                                                 <label for="inputPassword">
                                                                     Password
                                                                 </label>
+                                                                ${errorPassword}
 
                                                                 <form:errors path="password" cssClass="text-danger" />
 
