@@ -60,7 +60,7 @@ public class ProductService {
             if (cart == null) {
                 Cart otherCart = new Cart();
                 otherCart.setUser(user);
-                otherCart.setSum(1);
+                otherCart.setSum(0);
 
                 cart = this.cartRepository.save(otherCart);
             }
@@ -70,13 +70,27 @@ public class ProductService {
             if (product.isPresent()) {
                 Product realProduct = product.get();
 
-                CartDetail cartDetail = new CartDetail();
-                cartDetail.setCart(cart);
-                cartDetail.setProduct(realProduct);
-                cartDetail.setPrice(realProduct.getPrice());
-                cartDetail.setQuantity(1);
+                // check sản phẩm đã được thêm vào giỏ hàng trước đây chưa
+                CartDetail oldDetail = this.cartDetailRepository.findByCartAndProduct(cart, realProduct);
 
-                this.cartDetailRepository.save(cartDetail);
+                if (oldDetail == null) {
+                    CartDetail cartDetail = new CartDetail();
+                    cartDetail.setCart(cart);
+                    cartDetail.setProduct(realProduct);
+                    cartDetail.setPrice(realProduct.getPrice());
+                    cartDetail.setQuantity(1);
+
+                    this.cartDetailRepository.save(cartDetail);
+
+                    // update Cart sum
+                    cart.setSum(cart.getSum() + 1);
+                    this.cartRepository.save(cart);
+
+                } else {
+                    oldDetail.setQuantity(oldDetail.getQuantity() + 1);
+                    this.cartDetailRepository.save(oldDetail);
+                }
+
             }
 
         }
